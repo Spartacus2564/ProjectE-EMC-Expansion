@@ -9,7 +9,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
       - name: Set up Java 17
         uses: actions/setup-java@v4
@@ -20,11 +21,14 @@ jobs:
       - name: Fix permissions
         run: chmod +x gradlew
 
+      - name: Verify wrapper exists
+        run: ls -R
+
       - name: Build mod
-        run: ./gradlew build
+        run: bash ./gradlew build
 
       - name: Upload jar
         uses: actions/upload-artifact@v4
         with:
-          name: EMC-Expansion
+          name: mod
           path: build/libs/*.jar
